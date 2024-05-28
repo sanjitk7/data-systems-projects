@@ -1,0 +1,42 @@
+// Schema for dataframe encoding.
+// Your code here...
+// Flatbuffers schema for serializing a DataFrame
+
+// Flatbuffers schema for serializing a DataFrame
+
+namespace CS598MP3;
+
+table IntColumn {
+    int_values: [long];
+}
+
+table FloatColumn {
+    float_values: [double];
+}
+
+table StringColumn {
+    string_values: [string];
+}
+
+union AnyColumn { IntColumn, FloatColumn, StringColumn}
+
+// Column of a DataFrame (can be any type - int, float, string)
+table Column {
+    name: string;
+    values: AnyColumn;
+}
+
+// Metadata for the DataFrame
+table DataFrameMetadata {
+    name: string;
+    num_rows: long;
+    num_columns: long;
+}
+
+// Main DF
+table DataFrame {
+    df_metadata: DataFrameMetadata;
+    df_columns: [Column];
+}
+
+root_type DataFrame;
